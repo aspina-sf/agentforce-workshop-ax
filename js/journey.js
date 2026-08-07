@@ -7,6 +7,11 @@ const Journey = (() => {
     document.getElementById('intro-screen').style.display = 'none';
     document.getElementById('workshop-screen').style.display = '';
     document.getElementById('btn-save-progress').style.display = '';
+    const el = document.getElementById('header-participant');
+    if (el && data.meta && data.meta.participante) {
+      el.textContent = data.meta.participante;
+      el.style.display = '';
+    }
     renderProgressBar();
     goTo(etapaAtual);
   }

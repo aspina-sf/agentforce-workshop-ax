@@ -33,8 +33,17 @@ body {
   box-shadow: var(--shadow);
 }
 .header-logo { height: 36px; }
-.header-left, .header-right { min-width: 140px; }
-.header-right { display: flex; justify-content: flex-end; }
+.header-left { display: flex; align-items: center; gap: 12px; min-width: 180px; }
+.header-right { display: flex; justify-content: flex-end; min-width: 180px; }
+.header-participant {
+  font-size: 13px; font-weight: 600; color: var(--sf-blue);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;
+}
+@media (max-width: 600px) {
+  .header-participant { display: none; }
+  .header-left, .header-right { min-width: 40px; }
+  #app-header { padding: 0 12px; }
+}
 
 /* ── Progress bar ── */
 .progress-bar { display: flex; gap: 8px; align-items: center; }
@@ -66,12 +75,16 @@ body {
 
 /* ── Workshop layout: duas colunas ── */
 .workshop-layout {
-  display: grid; grid-template-columns: 1fr 300px;
-  gap: 24px; max-width: 1200px; margin: 0 auto; padding: 24px;
+  display: grid; grid-template-columns: 1fr 280px;
+  gap: 24px; max-width: 1100px; margin: 0 auto; padding: 24px;
 }
-@media (max-width: 860px) {
-  .workshop-layout { grid-template-columns: 1fr; }
+@media (max-width: 900px) {
+  .workshop-layout { grid-template-columns: 1fr; padding: 16px; }
   .step-sidebar { order: -1; }
+}
+@media (max-width: 480px) {
+  .workshop-layout { padding: 12px; gap: 12px; }
+  .step-main { padding: 20px 16px; }
 }
 
 /* ── Step main ── */
@@ -130,14 +143,14 @@ body {
   margin: 12px 0; overflow: hidden;
 }
 .content-box-header {
-  display: flex; justify-content: flex-end; gap: 8px;
+  display: flex; justify-content: flex-start; gap: 8px;
   padding: 6px 10px; background: #EBEBEB;
   border-bottom: 1px solid var(--sf-gray-border);
 }
 .content-box pre {
   padding: 16px; overflow-x: auto;
   max-height: 130px; transition: max-height 0.3s ease;
-  font-size: 14px; line-height: 1.5;
+  font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-break: break-word;
 }
 .content-box.expanded pre { max-height: none; }
 .btn-copy, .btn-expand {
