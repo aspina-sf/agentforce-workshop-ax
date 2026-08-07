@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentforce Workshop</title>
+  <link rel="stylesheet" href="css/workshop.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+</head>
+<body>
+
+  <!-- Header global -->
+  <header id="app-header">
+    <div class="header-left">
+      <img src="assets/salesforce-logo.svg" alt="Salesforce" class="header-logo">
+    </div>
+    <div class="header-center">
+      <div id="progress-bar" class="progress-bar" aria-label="Progresso do workshop"></div>
+    </div>
+    <div class="header-right">
+      <button id="btn-save-progress" class="btn-secondary" onclick="Session.exportJSON()" style="display:none">
+        Salvar progresso
+      </button>
+    </div>
+  </header>
+
+  <!-- Tela de boas-vindas -->
+  <main id="intro-screen" class="screen active">
+    <div id="intro-content"></div>
+  </main>
+
+  <!-- Tela principal do workshop -->
+  <main id="workshop-screen" class="screen" style="display:none">
+    <div class="workshop-layout">
+      <article id="step-content" class="step-main"></article>
+      <aside id="sidebar" class="step-sidebar"></aside>
+    </div>
+  </main>
+
+  <!-- Tela final -->
+  <main id="final-screen" class="screen" style="display:none">
+    <div id="final-content"></div>
+  </main>
+
+  <!-- Bibliotecas CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <!-- App -->
+  <script src="js/session.js"></script>
+  <script src="content/intro.js"></script>
+  <script src="content/etapa-1.js"></script>
+  <script src="content/etapa-2.js"></script>
+  <script src="content/etapa-3.js"></script>
+  <script src="content/etapa-4.js"></script>
+  <script src="content/etapa-5.js"></script>
+  <script src="content/etapa-6.js"></script>
+  <script src="content/etapa-7.js"></script>
+  <script src="content/etapa-8.js"></script>
+  <script src="content/etapa-9.js"></script>
+  <script src="js/export.js"></script>
+  <script src="js/journey.js"></script>
+</body>
+</html>
