@@ -4,13 +4,14 @@ const Intro = (() => {
 
     if (existing && existing.meta && existing.meta.participante) {
       const concluidas = (existing.progresso && existing.progresso.etapas_concluidas) || [];
+      const etapa0Concluida = existing.progresso && existing.progresso.etapa0_concluida;
       document.getElementById('intro-content').innerHTML = `
         <div class="intro-card">
           <img src="assets/salesforce-logo.svg" alt="Salesforce" style="margin-bottom:24px;display:block">
           <h1>Bem-vindo de volta, ${existing.meta.participante}!</h1>
           <p>Encontramos uma sessão salva — <strong>${existing.meta.empresa}</strong>, ${concluidas.length}/9 etapas concluídas.<br>Deseja continuar de onde parou?</p>
           <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
-            <button class="btn-primary" onclick="Journey.start()">Continuar de onde parei →</button>
+            <button class="btn-primary" onclick="${etapa0Concluida ? 'Journey.start()' : 'Journey.goToEtapa0()'}">Continuar de onde parei →</button>
             <button class="btn-secondary" onclick="Session.clear(); Intro.render()">Nova sessão</button>
           </div>
         </div>`;
@@ -65,7 +66,7 @@ const Intro = (() => {
       return;
     }
     Session.setMeta({ participante: nome, empresa, area, caso_de_uso: caso });
-    Journey.start();
+    Journey.goToEtapa0();
   }
 
   return { render, submit };

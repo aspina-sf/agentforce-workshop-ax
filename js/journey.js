@@ -1,17 +1,40 @@
 const Journey = (() => {
   const TOTAL = 9;
 
+  function goToEtapa0() {
+    document.getElementById('workshop-screen').style.display = 'none';
+    document.getElementById('intro-screen').style.display = '';
+    document.getElementById('btn-save-progress').style.display = 'none';
+
+    const etapa = ETAPAS[0];
+    document.getElementById('intro-content').innerHTML = etapa.renderContent();
+    _restoreEtapa0State();
+    Etapa0.updateButton();
+  }
+
+  function _restoreEtapa0State() {
+    const data = Session.load();
+    if (!data) return;
+    const email = document.getElementById('etapa0-email');
+    const optin = document.getElementById('etapa0-optin');
+    if (email && data.meta.email) email.value = data.meta.email;
+    if (optin && data.meta.optin_relatorio) optin.checked = true;
+  }
+
   function start() {
     const data = Session.getOrInit();
     const etapaAtual = data.progresso.etapa_atual || 1;
+
     document.getElementById('intro-screen').style.display = 'none';
     document.getElementById('workshop-screen').style.display = '';
     document.getElementById('btn-save-progress').style.display = '';
+
     const el = document.getElementById('header-participant');
     if (el && data.meta && data.meta.participante) {
       el.textContent = data.meta.participante;
       el.style.display = '';
     }
+
     renderProgressBar();
     goTo(etapaAtual);
   }
@@ -22,6 +45,7 @@ const Journey = (() => {
     const atual = data.progresso.etapa_atual || 1;
     const bar = document.getElementById('progress-bar');
     bar.innerHTML = '';
+
     for (let i = 1; i <= TOTAL; i++) {
       const dot = document.createElement('div');
       dot.className = 'progress-dot';
@@ -54,7 +78,7 @@ const Journey = (() => {
 
     const etapa = ETAPAS[n];
     const etapaData = Session.getEtapa(n);
-    document.getElementById('step-content').innerHTML = etapa.renderContent(etapaData);
+    document.getElementById('step-content').innerHTML = _wrapWithBackButton(etapa.renderContent(etapaData));
     _renderSidebar(n, etapa);
     _bindPracticeFields(n, etapa);
     _bindConcluirButton(n, etapa);
@@ -62,6 +86,10 @@ const Journey = (() => {
     _initContentBoxes();
     _initScrollSpy();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function _wrapWithBackButton(html) {
+    return `<button class="btn-back-etapa0" onclick="Journey.goToEtapa0()">← Voltar à Etapa 0</button>${html}`;
   }
 
   function _renderSidebar(n, etapa) {
@@ -122,6 +150,7 @@ const Journey = (() => {
     Session.concluirEtapa(n);
     renderProgressBar();
     if (n >= TOTAL) {
+      Session.sendToGAS();
       document.getElementById('workshop-screen').style.display = 'none';
       document.getElementById('final-screen').style.display = '';
       Export.renderFinalScreen();
@@ -176,5 +205,5 @@ const Journey = (() => {
 
   document.addEventListener('DOMContentLoaded', () => Intro.render());
 
-  return { start, goTo, concluir, renderProgressBar };
+  return { start, goTo, goToEtapa0, concluir, renderProgressBar };
 })();
