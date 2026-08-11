@@ -94,10 +94,10 @@ const Session = (() => {
     URL.revokeObjectURL(a.href);
   }
 
-  function sendToGAS() {
+  function sendToGAS(mdContent, pdfBase64, jsonContent) {
     const data = getOrInit();
-    if (!data.meta.optin_relatorio) return;
-    if (!WORKSHOP_CONFIG.gasEndpoint) return;
+    if (!data.meta.optin_relatorio) return Promise.resolve({ skipped: true });
+    if (!WORKSHOP_CONFIG.gasEndpoint) return Promise.resolve({ skipped: true });
 
     const payload = {
       participante: data.meta.participante,
@@ -107,43 +107,17 @@ const Session = (() => {
       caso_de_uso: data.meta.caso_de_uso,
       data_inicio: data.meta.data_inicio,
       etapas_concluidas: data.progresso.etapas_concluidas.length,
-      resumo: _buildResumoPayload(data)
+      md: mdContent || '',
+      pdf_base64: pdfBase64 || '',
+      json: jsonContent || ''
     };
 
-    fetch(WORKSHOP_CONFIG.gasEndpoint, {
+    return fetch(WORKSHOP_CONFIG.gasEndpoint, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
-    }).catch(() => {});
-  }
-
-  function _buildResumoPayload(data) {
-    const campos = {
-      descricao_livre_agente: 'Descrição do agente',
-      ajustes_identificados: 'Ajustes identificados',
-      agent_name: 'Agent Name',
-      instructions: 'Instructions',
-      welcome_message: 'Welcome Message',
-      oportunidades_melhoria: 'Oportunidades de melhoria',
-      ajustes_aplicados: 'Ajustes aplicados',
-      ciclos_realizados: 'Ciclos realizados',
-      observacoes_ciclos: 'Observações por ciclo',
-      dados_marcados: 'Instructions com dados',
-      yaml_agente: 'YAML do agente',
-      observacoes_finais: 'Observações finais'
-    };
-    let resumo = '';
-    for (let i = 1; i <= 9; i++) {
-      const etapa = data.etapas && data.etapas[i];
-      if (!etapa || !etapa.respostas) continue;
-      Object.entries(etapa.respostas).forEach(([key, value]) => {
-        if (value && String(value).trim() && campos[key]) {
-          resumo += `[Etapa ${i}] ${campos[key]}: ${String(value).slice(0, 300)}\n`;
-        }
-      });
-    }
-    return resumo;
+    }).then(() => ({ ok: true })).catch(() => ({ ok: false }));
   }
 
   return { load, save, clear, getEtapa, setEtapaResposta, concluirEtapa, concluirEtapa0, setMeta, exportJSON, sendToGAS, getOrInit };

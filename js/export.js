@@ -13,9 +13,10 @@ const Export = (() => {
 
   function renderFinalScreen() {
     const data = Session.getOrInit();
-    const { participante, empresa, area, caso_de_uso, data_inicio } = data.meta;
+    const { participante, empresa, area, caso_de_uso, data_inicio, optin_relatorio } = data.meta;
     const concluidas = (data.progresso && data.progresso.etapas_concluidas) || [];
     const dataFormatada = data_inicio ? data_inicio.split('T')[0] : '—';
+    const gasAtivo = !!WORKSHOP_CONFIG.gasEndpoint && optin_relatorio;
 
     document.getElementById('final-content').innerHTML = `
       <div class="final-card">
@@ -30,13 +31,52 @@ const Export = (() => {
           <p><strong>Data de início:</strong> ${dataFormatada}</p>
           <p><strong>Etapas concluídas:</strong> ${concluidas.length}/9</p>
         </div>
-        <p style="margin-bottom:4px">Baixe os artefatos do seu workshop:</p>
+        <p style="margin-bottom:12px">Baixe os artefatos do seu workshop:</p>
         <div class="final-actions">
           <button class="btn-primary" onclick="Export.downloadPDF()">⬇ Baixar PDF</button>
           <button class="btn-primary" onclick="Export.downloadMD()">⬇ Baixar MD</button>
-          <button class="btn-secondary" onclick="Session.exportJSON()">Exportar session.json</button>
+          <button class="btn-secondary" onclick="Session.exportJSON()">⬇ Exportar session.json</button>
         </div>
+        ${gasAtivo ? `
+        <div id="gas-status" class="gas-status gas-status--sending">
+          <span class="gas-status-icon">⏳</span> Enviando artefatos para a Salesforce…
+        </div>` : ''}
       </div>`;
+
+    if (gasAtivo) {
+      _sendAllToGAS();
+    }
+  }
+
+  function _sendAllToGAS() {
+    const data = Session.getOrInit();
+    const nome = (data.meta.participante || 'workshop').replace(/\s+/g, '-').toLowerCase();
+    const dataStr = (data.meta.data_inicio || '').split('T')[0] || 'sem-data';
+
+    const mdContent = _buildMDContent();
+    const jsonContent = JSON.stringify(data, null, 2);
+
+    _buildPDFBase64(mdContent, nome, dataStr).then(pdfBase64 => {
+      return Session.sendToGAS(mdContent, pdfBase64, jsonContent);
+    }).then(result => {
+      const el = document.getElementById('gas-status');
+      if (!el) return;
+      if (result && result.skipped) {
+        el.style.display = 'none';
+      } else if (result && result.ok !== false) {
+        el.className = 'gas-status gas-status--ok';
+        el.innerHTML = '<span class="gas-status-icon">✅</span> Artefatos enviados com sucesso para a Salesforce.';
+      } else {
+        el.className = 'gas-status gas-status--error';
+        el.innerHTML = '<span class="gas-status-icon">⚠️</span> Não foi possível enviar automaticamente. Baixe os artefatos acima e compartilhe com o facilitador.';
+      }
+    }).catch(() => {
+      const el = document.getElementById('gas-status');
+      if (el) {
+        el.className = 'gas-status gas-status--error';
+        el.innerHTML = '<span class="gas-status-icon">⚠️</span> Não foi possível enviar automaticamente. Baixe os artefatos acima e compartilhe com o facilitador.';
+      }
+    });
   }
 
   function _buildMDContent() {
@@ -105,16 +145,8 @@ const Export = (() => {
     URL.revokeObjectURL(a.href);
   }
 
-  function downloadPDF() {
-    if (typeof window.jspdf === 'undefined') {
-      alert('Biblioteca jsPDF não carregada. Verifique sua conexão e recarregue a página.');
-      return;
-    }
-    const data = Session.getOrInit();
-    const nome = (data.meta.participante || 'workshop').replace(/\s+/g, '-').toLowerCase();
-    const dataStr = (data.meta.data_inicio || '').split('T')[0] || 'sem-data';
-    const md = _buildMDContent();
-
+  function _buildPDFDoc(md) {
+    if (typeof window.jspdf === 'undefined') return null;
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
 
@@ -182,7 +214,28 @@ const Export = (() => {
       }
     });
 
-    doc.save(`workshop-${nome}-${dataStr}.pdf`);
+    return doc;
+  }
+
+  function downloadPDF() {
+    if (typeof window.jspdf === 'undefined') {
+      alert('Biblioteca jsPDF não carregada. Verifique sua conexão e recarregue a página.');
+      return;
+    }
+    const data = Session.getOrInit();
+    const nome = (data.meta.participante || 'workshop').replace(/\s+/g, '-').toLowerCase();
+    const dataStr = (data.meta.data_inicio || '').split('T')[0] || 'sem-data';
+    const doc = _buildPDFDoc(_buildMDContent());
+    if (doc) doc.save(`workshop-${nome}-${dataStr}.pdf`);
+  }
+
+  function _buildPDFBase64(md) {
+    return new Promise(resolve => {
+      if (typeof window.jspdf === 'undefined') { resolve(''); return; }
+      const doc = _buildPDFDoc(md);
+      if (!doc) { resolve(''); return; }
+      resolve(doc.output('datauristring'));
+    });
   }
 
   return { renderFinalScreen, downloadMD, downloadPDF };

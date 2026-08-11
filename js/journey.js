@@ -150,10 +150,9 @@ const Journey = (() => {
     Session.concluirEtapa(n);
     renderProgressBar();
     if (n >= TOTAL) {
-      Session.sendToGAS();
       document.getElementById('workshop-screen').style.display = 'none';
       document.getElementById('final-screen').style.display = '';
-      Export.renderFinalScreen();
+      Export.renderFinalScreen(); // renderFinalScreen dispara o envio GAS internamente
     } else {
       goTo(n + 1);
     }
