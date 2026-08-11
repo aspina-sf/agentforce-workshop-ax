@@ -191,6 +191,23 @@ const Journey = (() => {
     const headings = Array.from(document.querySelectorAll('#step-content h2'));
     const topics = Array.from(document.querySelectorAll('#sidebar-topics li'));
     if (!headings.length || !topics.length) return;
+
+    // Assign stable IDs to headings so topics can link to them
+    headings.forEach((h, i) => {
+      if (!h.id) h.id = `heading-${i}`;
+    });
+
+    // Click on topic → scroll heading into view with offset for sticky header
+    topics.forEach((t, i) => {
+      if (headings[i]) {
+        t.style.cursor = 'pointer';
+        t.addEventListener('click', () => {
+          const top = headings[i].getBoundingClientRect().top + window.scrollY - 72;
+          window.scrollTo({ top, behavior: 'smooth' });
+        });
+      }
+    });
+
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -199,7 +216,7 @@ const Journey = (() => {
           if (topics[idx]) topics[idx].classList.add('active');
         }
       });
-    }, { threshold: 0.4 });
+    }, { rootMargin: '-56px 0px -60% 0px', threshold: 0 });
     headings.forEach(h => observer.observe(h));
   }
 
