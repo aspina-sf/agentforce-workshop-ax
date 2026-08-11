@@ -32,7 +32,7 @@ body {
   position: sticky; top: 0; z-index: 100;
   box-shadow: var(--shadow);
 }
-.header-logo { height: 36px; }
+.header-logo { height: 40px; width: auto; }
 .header-left { display: flex; align-items: center; gap: 12px; min-width: 180px; }
 .header-right { display: flex; justify-content: flex-end; min-width: 180px; }
 .header-participant {
