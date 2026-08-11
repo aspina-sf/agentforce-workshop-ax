@@ -1,9 +1,8 @@
 const SESSION_KEY = 'agentforce_workshop_session';
 
 const WORKSHOP_CONFIG = {
-  // Preencha com a URL do Google Apps Script antes de distribuir o workshop.
-  // Deixe vazio ('') para desabilitar o envio automático.
-  gasEndpoint: ''
+  // Email do instrutor — aparece nas instruções de envio da tela final
+  instructorEmail: ''
 };
 
 const Session = (() => {
@@ -94,31 +93,5 @@ const Session = (() => {
     URL.revokeObjectURL(a.href);
   }
 
-  function sendToGAS(mdContent, pdfBase64, jsonContent) {
-    const data = getOrInit();
-    if (!data.meta.optin_relatorio) return Promise.resolve({ skipped: true });
-    if (!WORKSHOP_CONFIG.gasEndpoint) return Promise.resolve({ skipped: true });
-
-    const payload = {
-      participante: data.meta.participante,
-      empresa: data.meta.empresa,
-      area: data.meta.area,
-      email: data.meta.email,
-      caso_de_uso: data.meta.caso_de_uso,
-      data_inicio: data.meta.data_inicio,
-      etapas_concluidas: data.progresso.etapas_concluidas.length,
-      md: mdContent || '',
-      pdf_base64: pdfBase64 || '',
-      json: jsonContent || ''
-    };
-
-    return fetch(WORKSHOP_CONFIG.gasEndpoint, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    }).then(() => ({ ok: true })).catch(() => ({ ok: false }));
-  }
-
-  return { load, save, clear, getEtapa, setEtapaResposta, concluirEtapa, concluirEtapa0, setMeta, exportJSON, sendToGAS, getOrInit };
+  return { load, save, clear, getEtapa, setEtapaResposta, concluirEtapa, concluirEtapa0, setMeta, exportJSON, getOrInit };
 })();

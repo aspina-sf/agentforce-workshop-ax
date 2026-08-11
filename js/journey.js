@@ -152,7 +152,7 @@ const Journey = (() => {
     if (n >= TOTAL) {
       document.getElementById('workshop-screen').style.display = 'none';
       document.getElementById('final-screen').style.display = '';
-      Export.renderFinalScreen(); // renderFinalScreen dispara o envio GAS internamente
+      Export.renderFinalScreen();
     } else {
       goTo(n + 1);
     }

@@ -82,7 +82,7 @@ ETAPAS[0] = {
           <div class="optin-field">
             <label class="optin-label">
               <input type="checkbox" id="etapa0-optin" onchange="Etapa0.updateButton()">
-              <span>Entendo que a Salesforce e a minha empresa possui um acordo de confidencialidade que protege o conteúdo gerado que será compartilhado com a equipe Salesforce.</span>
+              <span>Autorizo o compartilhamento do conteúdo gerado neste workshop com a equipe Salesforce.</span>
             </label>
           </div>
         </div>
