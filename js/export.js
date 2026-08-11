@@ -20,7 +20,7 @@ const Export = (() => {
 
     document.getElementById('final-content').innerHTML = `
       <div class="final-card">
-        <img src="assets/salesforce-logo.svg" alt="Salesforce" style="display:block;margin:0 auto 20px">
+        <img src="https://a.sfdcstatic.com/shared/images/c360-nav/salesforce-with-type-logo.svg" alt="Salesforce" style="display:block;margin:0 auto 20px">
         <h1>🎉 Parabéns, ${participante}!</h1>
         <p>Você concluiu o Agentforce Workshop com sucesso.</p>
         <div class="final-summary">
