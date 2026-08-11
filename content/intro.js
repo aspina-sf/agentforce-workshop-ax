@@ -7,7 +7,7 @@ const Intro = (() => {
       const etapa0Concluida = existing.progresso && existing.progresso.etapa0_concluida;
       document.getElementById('intro-content').innerHTML = `
         <div class="intro-card">
-          <img src="https://a.sfdcstatic.com/shared/images/c360-nav/salesforce-with-type-logo.svg" alt="Salesforce" style="margin-bottom:24px;display:block">
+          <img src="https://wp.sfdcdigital.com/en-us/wp-content/uploads/sites/4/2025/11/agentforce-demos.png?w=728" alt="Salesforce" style="margin-bottom:24px;display:block;width:100%;max-width:480px;border-radius:8px">
           <h1>Bem-vindo de volta, ${existing.meta.participante}!</h1>
           <p>Encontramos uma sessão salva — <strong>${existing.meta.empresa}</strong>, ${concluidas.length}/9 etapas concluídas.<br>Deseja continuar de onde parou?</p>
           <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
@@ -20,7 +20,7 @@ const Intro = (() => {
 
     document.getElementById('intro-content').innerHTML = `
       <div class="intro-card">
-        <img src="https://a.sfdcstatic.com/shared/images/c360-nav/salesforce-with-type-logo.svg" alt="Salesforce" style="margin-bottom:24px;display:block">
+        <img src="https://wp.sfdcdigital.com/en-us/wp-content/uploads/sites/4/2025/11/agentforce-demos.png?w=728" alt="Salesforce" style="margin-bottom:24px;display:block;width:100%;max-width:480px;border-radius:8px">
         <h1>Agentforce Workshop</h1>
         <p>Guia prático de construção e curadoria conversacional para Agentforce.<br>
            Preencha seus dados para começar.</p>
