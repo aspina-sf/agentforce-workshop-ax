@@ -22,8 +22,7 @@ const Intro = (() => {
       <div class="intro-card">
         <img src="https://wp.sfdcdigital.com/en-us/wp-content/uploads/sites/4/2025/11/agentforce-demos.png?w=728" alt="Salesforce" style="margin-bottom:24px;display:block;width:100%;max-width:480px;border-radius:8px">
         <h1>Agentforce Workshop</h1>
-        <p>Guia prático de construção e curadoria conversacional para Agentforce.<br>
-           Preencha seus dados para começar.</p>
+        <p>Guia prático de construção e curadoria conversacional para Agentforce. Preencha seus dados para começar.</p>
         <form id="intro-form" onsubmit="Intro.submit(event)" novalidate>
           <div class="practice-field">
             <label class="field-label" for="intro-nome">Nome completo *</label>
