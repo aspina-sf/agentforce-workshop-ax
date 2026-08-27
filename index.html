@@ -18,6 +18,11 @@
     <div class="header-center">
       <div id="progress-bar" class="progress-bar" aria-label="Progresso do workshop"></div>
     </div>
+    <div class="header-right">
+      <button id="btn-save-progress" class="btn-secondary" onclick="Session.exportJSON()" style="display:none">
+        Salvar progresso
+      </button>
+    </div>
   </header>
 
   <!-- Tela de boas-vindas -->
@@ -29,7 +34,6 @@
   <main id="workshop-screen" class="screen" style="display:none">
     <div class="workshop-layout">
       <article id="step-content" class="step-main"></article>
-      <aside id="sidebar" class="step-sidebar"></aside>
     </div>
   </main>
 

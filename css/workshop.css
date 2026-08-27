@@ -75,8 +75,8 @@ body {
 
 /* ── Workshop layout: duas colunas ── */
 .workshop-layout {
-  display: grid; grid-template-columns: 1fr 280px;
-  gap: 24px; max-width: 1265px; margin: 0 auto; padding: 24px;
+  display: block;
+  max-width: 1265px; margin: 0 auto; padding: 24px;
 }
 @media (max-width: 900px) {
   .workshop-layout { grid-template-columns: 1fr; padding: 16px; }

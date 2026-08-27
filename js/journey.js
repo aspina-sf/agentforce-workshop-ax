@@ -4,12 +4,14 @@ const Journey = (() => {
   function goToIntro() {
     document.getElementById('workshop-screen').style.display = 'none';
     document.getElementById('intro-screen').style.display = '';
+    document.getElementById('btn-save-progress').style.display = 'none';
     Intro.render();
   }
 
   function goToEtapa0() {
     document.getElementById('intro-screen').style.display = 'none';
     document.getElementById('workshop-screen').style.display = '';
+    document.getElementById('btn-save-progress').style.display = '';
 
     const data = Session.getOrInit();
     const el = document.getElementById('header-participant');
@@ -47,6 +49,7 @@ const Journey = (() => {
 
     document.getElementById('intro-screen').style.display = 'none';
     document.getElementById('workshop-screen').style.display = '';
+    document.getElementById('btn-save-progress').style.display = '';
 
     const el = document.getElementById('header-participant');
     if (el && data.meta && data.meta.participante) {
@@ -123,8 +126,7 @@ const Journey = (() => {
     const data = Session.getOrInit();
     const concluidas = data.progresso.etapas_concluidas || [];
     const pct = Math.round((concluidas.length / TOTAL) * 100);
-    document.getElementById('sidebar').innerHTML = `
-      <button class="btn-secondary" onclick="Session.exportJSON()" style="width:100%">Salvar progresso</button>`;
+    document.getElementById('sidebar') && (document.getElementById('sidebar').innerHTML = '');
   }
 
   function _bindPracticeFields(n, etapa) {
