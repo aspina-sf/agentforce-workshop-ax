@@ -124,20 +124,7 @@ const Journey = (() => {
     const concluidas = data.progresso.etapas_concluidas || [];
     const pct = Math.round((concluidas.length / TOTAL) * 100);
     document.getElementById('sidebar').innerHTML = `
-      <div class="sidebar-card">
-        <h4>Tópicos</h4>
-        <ul class="sidebar-topics" id="sidebar-topics">
-          ${(etapa.topicos || []).map((t, i) => `<li data-idx="${i}">${t}</li>`).join('')}
-        </ul>
-      </div>
-      <div class="sidebar-card sidebar-progress">
-        <h4>Progresso geral</h4>
-        <div class="sidebar-progress-bar-track">
-          <div class="sidebar-progress-bar-fill" style="width:${pct}%"></div>
-        </div>
-        <div>${concluidas.length}/${TOTAL} etapas</div>
-      </div>
-      <button class="btn-secondary" onclick="Session.exportJSON()" style="width:100%;margin-top:4px">Salvar progresso</button>`;
+      <button class="btn-secondary" onclick="Session.exportJSON()" style="width:100%">Salvar progresso</button>`;
   }
 
   function _bindPracticeFields(n, etapa) {
