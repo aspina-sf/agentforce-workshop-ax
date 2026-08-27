@@ -2,7 +2,7 @@ if (typeof ETAPAS === 'undefined') window.ETAPAS = {};
 
 ETAPAS[0] = {
   titulo: 'Antes de Começarmos',
-  tempo: '15–30 min',
+  tempo: '5–7 min',
   topicos: ['Trailhead', 'Playground', 'Pré-requisitos', 'Seus dados'],
   renderContent() {
     return `

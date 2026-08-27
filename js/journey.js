@@ -4,14 +4,12 @@ const Journey = (() => {
   function goToIntro() {
     document.getElementById('workshop-screen').style.display = 'none';
     document.getElementById('intro-screen').style.display = '';
-    document.getElementById('btn-save-progress').style.display = 'none';
     Intro.render();
   }
 
   function goToEtapa0() {
     document.getElementById('intro-screen').style.display = 'none';
     document.getElementById('workshop-screen').style.display = '';
-    document.getElementById('btn-save-progress').style.display = '';
 
     const data = Session.getOrInit();
     const el = document.getElementById('header-participant');
@@ -21,7 +19,7 @@ const Journey = (() => {
     }
 
     const etapa = ETAPAS[0];
-    document.getElementById('step-content').innerHTML = _wrapWithEtapa0BackButton(etapa.renderContent());
+    document.getElementById('step-content').innerHTML = _wrapWithEtapa0BackButton(_injectTempo(etapa.tempo, etapa.renderContent()));
     _renderSidebar(0, etapa);
     _restoreEtapa0State();
     Etapa0.updateButton();
@@ -49,7 +47,6 @@ const Journey = (() => {
 
     document.getElementById('intro-screen').style.display = 'none';
     document.getElementById('workshop-screen').style.display = '';
-    document.getElementById('btn-save-progress').style.display = '';
 
     const el = document.getElementById('header-participant');
     if (el && data.meta && data.meta.participante) {
@@ -79,6 +76,8 @@ const Journey = (() => {
         dot.addEventListener('click', () => goTo(i));
       } else if (i === atual) {
         dot.classList.add('active');
+        dot.style.cursor = 'pointer';
+        dot.addEventListener('click', () => goTo(i));
       } else {
         dot.classList.add('locked');
       }
@@ -90,7 +89,7 @@ const Journey = (() => {
     const data = Session.getOrInit();
     const concluidas = data.progresso.etapas_concluidas || [];
     const etapaAtual = data.progresso.etapa_atual || 1;
-    if (n !== etapaAtual && !concluidas.includes(n)) return;
+    if (n > etapaAtual) return;
 
     if (typeof ETAPAS === 'undefined' || !ETAPAS[n]) {
       document.getElementById('step-content').innerHTML = `<p style="padding:20px">Etapa ${n} em construção.</p>`;
@@ -100,7 +99,7 @@ const Journey = (() => {
 
     const etapa = ETAPAS[n];
     const etapaData = Session.getEtapa(n);
-    document.getElementById('step-content').innerHTML = _wrapWithBackButton(etapa.renderContent(etapaData));
+    document.getElementById('step-content').innerHTML = _wrapWithBackButton(_injectTempo(etapa.tempo, etapa.renderContent(etapaData)));
     _renderSidebar(n, etapa);
     _bindPracticeFields(n, etapa);
     _bindConcluirButton(n, etapa);
@@ -114,15 +113,17 @@ const Journey = (() => {
     return `<button class="btn-back-etapa0" onclick="Journey.goToEtapa0()">← Voltar à Etapa 0</button>${html}`;
   }
 
+  function _injectTempo(tempo, html) {
+    if (!tempo) return html;
+    const chip = `<div class="inline-tempo"><span class="inline-tempo-label">Tempo estimado</span><span class="inline-tempo-value">⏱ ${tempo}</span></div>`;
+    return html.replace(/(<\/h1>)/, `$1${chip}`);
+  }
+
   function _renderSidebar(n, etapa) {
     const data = Session.getOrInit();
     const concluidas = data.progresso.etapas_concluidas || [];
     const pct = Math.round((concluidas.length / TOTAL) * 100);
     document.getElementById('sidebar').innerHTML = `
-      <div class="sidebar-card">
-        <h4>Tempo estimado</h4>
-        <div class="sidebar-time">⏱ ${etapa.tempo || '15 min'}</div>
-      </div>
       <div class="sidebar-card">
         <h4>Tópicos</h4>
         <ul class="sidebar-topics" id="sidebar-topics">
@@ -135,7 +136,8 @@ const Journey = (() => {
           <div class="sidebar-progress-bar-fill" style="width:${pct}%"></div>
         </div>
         <div>${concluidas.length}/${TOTAL} etapas</div>
-      </div>`;
+      </div>
+      <button class="btn-secondary" onclick="Session.exportJSON()" style="width:100%;margin-top:4px">Salvar progresso</button>`;
   }
 
   function _bindPracticeFields(n, etapa) {
