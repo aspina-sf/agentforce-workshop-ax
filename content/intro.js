@@ -51,8 +51,8 @@ const Intro = (() => {
             <textarea id="intro-caso" rows="4" placeholder="Ex: Agente de cobrança B2B para lembrar clientes sobre faturas em atraso" required></textarea>
           </div>
           <div class="practice-field">
-            <label class="field-label" for="intro-senha">Senha do workshop</label>
-            <input type="password" id="intro-senha" placeholder="Digite a senha fornecida pelo instrutor">
+            <label class="field-label" for="intro-senha">Código do treinamento</label>
+            <input type="text" id="intro-senha" placeholder="Digite o código fornecido pelo instrutor">
           </div>
           <button type="submit" class="btn-primary">Começar workshop →</button>
         </form>
