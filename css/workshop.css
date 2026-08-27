@@ -59,7 +59,7 @@ body {
 .progress-dot.active { border-color: var(--sf-blue); color: var(--sf-blue); }
 .progress-dot.completed { background: var(--sf-blue); border-color: var(--sf-blue); color: var(--sf-white); }
 .progress-dot.locked { opacity: 0.4; }
-.progress-dot.selected { outline: 3px solid var(--sf-orange); outline-offset: 3px; }
+.progress-dot.selected { box-shadow: 0 0 0 3px white, 0 0 0 6px var(--sf-orange); }
 
 /* ── Screens ── */
 .screen { min-height: calc(100vh - 56px); }
