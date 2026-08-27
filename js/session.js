@@ -13,6 +13,7 @@ const Session = (() => {
         empresa: '',
         area: '',
         caso_de_uso: '',
+        senha: '',
         email: '',
         optin_relatorio: false,
         data_inicio: new Date().toISOString(),

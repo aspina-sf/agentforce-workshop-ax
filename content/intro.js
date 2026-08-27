@@ -50,6 +50,10 @@ const Intro = (() => {
             </label>
             <textarea id="intro-caso" rows="4" placeholder="Ex: Agente de cobrança B2B para lembrar clientes sobre faturas em atraso" required></textarea>
           </div>
+          <div class="practice-field">
+            <label class="field-label" for="intro-senha">Senha do workshop</label>
+            <input type="password" id="intro-senha" placeholder="Digite a senha fornecida pelo instrutor">
+          </div>
           <button type="submit" class="btn-primary">Começar workshop →</button>
         </form>
       </div>`;
@@ -61,11 +65,12 @@ const Intro = (() => {
     const empresa = document.getElementById('intro-empresa').value.trim();
     const area = document.getElementById('intro-area').value;
     const caso = document.getElementById('intro-caso').value.trim();
+    const senha = document.getElementById('intro-senha').value;
     if (!nome || !empresa || !area || !caso) {
       alert('Por favor, preencha todos os campos.');
       return;
     }
-    Session.setMeta({ participante: nome, empresa, area, caso_de_uso: caso });
+    Session.setMeta({ participante: nome, empresa, area, caso_de_uso: caso, senha });
     Journey.goToEtapa0();
   }
 
