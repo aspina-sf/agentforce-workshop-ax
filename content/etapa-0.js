@@ -2,9 +2,10 @@ if (typeof ETAPAS === 'undefined') window.ETAPAS = {};
 
 ETAPAS[0] = {
   titulo: 'Antes de Começarmos',
+  tempo: '15–30 min',
+  topicos: ['Trailhead', 'Playground', 'Pré-requisitos', 'Seus dados'],
   renderContent() {
     return `
-      <div class="etapa0-card">
         <h1>Etapa 0 — Antes de Começarmos</h1>
 
         <p>Antes de entrar no workshop, você precisa ter um ambiente Salesforce funcional com o Agentforce habilitado. Siga os passos abaixo — leva cerca de 15 a 30 minutos.</p>
@@ -20,8 +21,8 @@ ETAPAS[0] = {
         <div class="callout-box" style="margin-bottom:16px">
           <span class="callout-box-icon">⚠️</span>
           <div class="callout-box-body">
-            <strong>Esse emblema requer um(a) novo(a) Agentforce Builder Playground personalizado(a).</strong><br>
-            Você tem tempo limitado para concluir esse emblema. <strong>Se você não concluir todas as unidades deste emblema antes que sua organização expire, perderá o acesso e terá de recomeçar.</strong> Recomendamos que você comece e conclua este emblema em 1 a 2 sessões, enquanto sua organização estiver ativa.
+            <strong>Esse workshop usará um Agentforce Builder Playground personalizado(a).</strong><br>
+            O playground ficará ativo por 7 dias após sua criação. Use-o como ambiente de aprendizado e exporte as configuração feitas em uma org Salesforce.
           </div>
         </div>
 
@@ -89,8 +90,7 @@ ETAPAS[0] = {
 
         <button class="btn-concluir" id="btn-concluir-0" disabled onclick="Etapa0.concluir()">
           Estou pronto, vamos começar →
-        </button>
-      </div>`;
+        </button>`;
   }
 };
 

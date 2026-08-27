@@ -1,15 +1,37 @@
 const Journey = (() => {
   const TOTAL = 9;
 
-  function goToEtapa0() {
+  function goToIntro() {
     document.getElementById('workshop-screen').style.display = 'none';
     document.getElementById('intro-screen').style.display = '';
     document.getElementById('btn-save-progress').style.display = 'none';
+    Intro.render();
+  }
+
+  function goToEtapa0() {
+    document.getElementById('intro-screen').style.display = 'none';
+    document.getElementById('workshop-screen').style.display = '';
+    document.getElementById('btn-save-progress').style.display = '';
+
+    const data = Session.getOrInit();
+    const el = document.getElementById('header-participant');
+    if (el && data.meta && data.meta.participante) {
+      el.textContent = data.meta.participante;
+      el.style.display = '';
+    }
 
     const etapa = ETAPAS[0];
-    document.getElementById('intro-content').innerHTML = etapa.renderContent();
+    document.getElementById('step-content').innerHTML = _wrapWithEtapa0BackButton(etapa.renderContent());
+    _renderSidebar(0, etapa);
     _restoreEtapa0State();
     Etapa0.updateButton();
+    renderProgressBar();
+    _initScrollSpy();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function _wrapWithEtapa0BackButton(html) {
+    return `<button class="btn-back-etapa0" onclick="Journey.goToIntro()">← Voltar ao cadastro</button>${html}`;
   }
 
   function _restoreEtapa0State() {
@@ -221,5 +243,5 @@ const Journey = (() => {
 
   document.addEventListener('DOMContentLoaded', () => Intro.render());
 
-  return { start, goTo, goToEtapa0, concluir, renderProgressBar };
+  return { start, goTo, goToEtapa0, goToIntro, concluir, renderProgressBar };
 })();
