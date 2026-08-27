@@ -1,5 +1,6 @@
 const Journey = (() => {
   const TOTAL = 9;
+  let _currentStep = null;
 
   function goToIntro() {
     document.getElementById('workshop-screen').style.display = 'none';
@@ -84,6 +85,7 @@ const Journey = (() => {
       } else {
         dot.classList.add('locked');
       }
+      if (i === _currentStep) dot.classList.add('selected');
       bar.appendChild(dot);
     }
   }
@@ -100,6 +102,7 @@ const Journey = (() => {
       return;
     }
 
+    _currentStep = n;
     const etapa = ETAPAS[n];
     const etapaData = Session.getEtapa(n);
     document.getElementById('step-content').innerHTML = _wrapWithBackButton(_injectTempo(etapa.tempo, etapa.renderContent(etapaData)));
