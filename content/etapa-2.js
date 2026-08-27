@@ -3,7 +3,7 @@ if (typeof ETAPAS === 'undefined') window.ETAPAS = {};
 ETAPAS[2] = {
   titulo: 'Revisar e ajustar a conversa simulada',
   tempo: '20 min',
-  topicos: ['Objetivos', 'Teoria', 'Exemplo Force Recovery', 'Prática', 'Recap'],
+  topicos: ['Objetivos', 'Como revisar', 'Exemplo', 'Prompt Perfeito', 'Prática', 'Recap'],
   campos: [{ key: 'ajustes_identificados', obrigatorio: true }],
   renderContent(etapaData) {
     const r = etapaData.respostas || {};
@@ -12,9 +12,9 @@ ETAPAS[2] = {
 
       <h2>Objetivos de Aprendizado</h2>
       <ul>
-        <li>Analisar criticamente a conversa gerada pela IA</li>
-        <li>Identificar lacunas, erros de tom e oportunidades de melhoria</li>
-        <li>Documentar os ajustes antes de implementá-los</li>
+        <li>Validar se o agente conduz o atendimento de forma lógica</li>
+        <li>Verificar se o tom esperado e as regras de negócio estão sendo respeitados</li>
+        <li>Identificar como o agente lida com dúvidas, recusas e exceções</li>
       </ul>
 
       <div class="callout-box">
@@ -24,42 +24,50 @@ ETAPAS[2] = {
         </div>
       </div>
 
-      <h2>Teoria</h2>
-      <p>Após gerar a conversa simulada, você precisa revisá-la com olhar crítico. Pergunte-se: o agente se apresentou corretamente? O tom estava adequado para o nosso público? Ele coletou as informações certas? Perguntou o que não deveria?</p>
-      <p>Cada ajuste identificado agora evita dezenas de correções depois. Use um prompt de revisão estruturado para não deixar nada passar.</p>
+      <h2>Como revisar</h2>
+      <p>Leia a conversa gerada e avalie se o agente conduz o atendimento de forma lógica, usa o tom esperado, respeita as regras de negócio e lida adequadamente com dúvidas, recusas e exceções.</p>
+      <p>Para cada ajuste identificado, descreva livremente o que precisa mudar. Quando houver ajustes, ainda na mesma conversa com o assistente de IA, use o <strong>Prompt Perfeito</strong> abaixo. Repita até que a conversa simulada seja aprovada pela área de negócio.</p>
 
       <h2>Exemplo Real — Force Recovery</h2>
-      <p>O time da Force Recovery usou o seguinte prompt para revisar a conversa gerada:</p>
+      <p>Ajuste identificado na conversa de cobrança B2B:</p>
       <div class="content-box">
         <div class="content-box-header">
           <button class="btn-copy">Copiar</button>
           <button class="btn-expand">Expandir</button>
         </div>
-        <pre><code class="language-text">Revise a conversa acima como se você fosse o gerente de atendimento da Force Recovery. Avalie:
-1) O agente se apresentou de forma adequada e completa?
-2) O tom estava profissional e humano, sem ser agressivo?
-3) Ele ofereceu as opções de parcelamento corretamente (até 3x sem juros)?
-4) Há alguma pergunta que não deveria ter sido feita?
-5) O agente prometeu algo que não deveria (ex: descontos)?
-6) O encerramento da conversa foi satisfatório?
-Para cada ponto, diga o que está bom e o que deve mudar.</code></pre>
+        <pre><code class="language-text">Antes de perguntar o CNPJ, o agente precisa confirmar se Carlos é a pessoa responsável por tratar assuntos financeiros. Se for, solicite o CNPJ. Se não for, pergunte os dados de contato do responsável: nome, telefone ou e-mail. Quando o interlocutor informar esses dados, agradeça a informação e encerre o atendimento.</code></pre>
       </div>
-      <p>Os ajustes identificados: o agente não mencionou o CNPJ do cliente para confirmar identidade, e o encerramento não registrou explicitamente a intenção de pagamento.</p>
+      <p>Após aplicar o ajuste, avalie se o novo diálogo gerado atende às necessidades apontadas e continue refinando até a aprovação.</p>
+
+      <h2>Prompt Perfeito</h2>
+      <p>Use este prompt na mesma conversa com seu assistente de IA para incorporar os ajustes:</p>
+      <div class="content-box">
+        <div class="content-box-header">
+          <button class="btn-copy">Copiar</button>
+          <button class="btn-expand">Expandir</button>
+        </div>
+        <pre><code class="language-text">Revise a última versão da conversa simulada com base nos ajustes abaixo. Mantenha tudo o que já estiver adequado e altere somente o que for necessário.
+
+Ajustes necessários:
+[Descreva livremente os ajustes desejados.]
+
+Gere uma nova versão completa da conversa entre o agente e o cliente.</code></pre>
+      </div>
 
       <h2>Prática — Sua vez</h2>
       <div class="practice-section">
         <div class="practice-field">
           <label class="field-label" for="campo-ajustes_identificados">
             Quais ajustes você identificou na conversa simulada? *
-            <span>Liste os pontos que precisam melhorar: tom, fluxo, informações coletadas, apresentação do agente, encerramento, etc.</span>
+            <span>Descreva cada ponto que precisa mudar: tom, fluxo, informações coletadas, apresentação do agente, encerramento, tratamento de recusas, etc.</span>
           </label>
-          <textarea id="campo-ajustes_identificados" rows="10" placeholder="Ex: 1) O agente não se apresentou com o nome da empresa&#10;2) Tom muito formal para o nosso público&#10;3) Não perguntou sobre...">${r.ajustes_identificados || ''}</textarea>
+          <textarea id="campo-ajustes_identificados" rows="10" placeholder="Ex: 1) O agente não confirmou se o interlocutor é o responsável antes de pedir dados sensíveis&#10;2) Tom muito formal para o nosso público&#10;3) Não tratou a recusa do cliente com firmeza adequada...">${r.ajustes_identificados || ''}</textarea>
         </div>
       </div>
 
       <h2>Recap</h2>
       <div class="recap-box">
-        Você revisou a conversa com olhar de negócio. Os ajustes que identificou agora serão incorporados nas configurações do agente na próxima etapa, garantindo que ele reflita exatamente como sua empresa quer se comunicar.
+        Continue refinando com o Prompt Perfeito até que a conversa simulada seja aprovada pela área de negócio. Na próxima etapa, você usará essa conversa aprovada para gerar as configurações do agente no Agentforce.
       </div>
 
       <button class="btn-concluir" id="btn-concluir-2" disabled>Concluir Etapa 2 →</button>`;

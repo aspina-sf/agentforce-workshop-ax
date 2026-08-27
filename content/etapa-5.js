@@ -3,7 +3,7 @@ if (typeof ETAPAS === 'undefined') window.ETAPAS = {};
 ETAPAS[5] = {
   titulo: 'Primeiro ciclo de ajustes',
   tempo: '25 min',
-  topicos: ['Objetivos', 'Teoria', 'Exemplo Force Recovery', 'Prática', 'Recap'],
+  topicos: ['Objetivos', 'Como funciona', 'Prompt Perfeito', 'Prática', 'Recap'],
   campos: [{ key: 'ajustes_aplicados', obrigatorio: true }],
   renderContent(etapaData) {
     const r = etapaData.respostas || {};
@@ -12,49 +12,57 @@ ETAPAS[5] = {
 
       <h2>Objetivos de Aprendizado</h2>
       <ul>
-        <li>Transformar as oportunidades de melhoria em ajustes concretos nas Instructions</li>
-        <li>Usar IA para reescrever seções específicas das Instructions</li>
+        <li>Transformar as oportunidades de melhoria em ajustes concretos nas configurações do agente</li>
+        <li>Usar a IA para atualizar somente os campos necessários</li>
         <li>Validar que cada ajuste resolveu o problema identificado</li>
       </ul>
 
       <div class="callout-box">
         <span class="callout-box-icon">⚠️</span>
         <div class="callout-box-body">
-          <strong>Faça um ajuste de cada vez</strong> e teste após cada mudança. Ajustes em lote dificultam identificar o que funcionou e o que não funcionou.
+          <strong>Ajustes gerais</strong> vão para System &gt; Agent-Level Instructions. <strong>Ajustes específicos do subagente</strong> vão para Subagent Description ou Subagent Reasoning Instructions. O prompt abaixo organiza isso automaticamente.
         </div>
       </div>
 
-      <h2>Teoria</h2>
-      <p>O primeiro ciclo de ajustes transforma observações brutas em melhorias precisas nas Instructions. A chave é ser específico: ao invés de "melhorar o tom", indique exatamente em qual parte das Instructions o tom deve mudar e como.</p>
-      <p>Use a IA como co-autora: mostre a ela a seção problemática das Instructions, explique o problema observado no teste, e peça uma reescrita cirúrgica — sem alterar o resto.</p>
+      <h2>Como funciona</h2>
+      <p>Após realizar os primeiros testes, registre os pontos de melhoria na planilha de refinamento. Envie ou cole a planilha atualizada na mesma conversa com seu assistente de IA e insira o Prompt Perfeito abaixo.</p>
+      <p>Use a dica do YAML (da Etapa 4) ou atualize diretamente no Agentforce os campos retornados com seus respectivos ajustes. Salve o agente, reinicie o Preview e realize novos testes.</p>
 
-      <h2>Exemplo Real — Force Recovery</h2>
-      <p>Prompt usado para o primeiro ajuste:</p>
+      <h2>Prompt Perfeito</h2>
       <div class="content-box">
         <div class="content-box-header">
           <button class="btn-copy">Copiar</button>
           <button class="btn-expand">Expandir</button>
         </div>
-        <pre><code class="language-text">Nas Instructions abaixo, ajuste apenas o trecho que trata de parcelamento. O agente deve reconhecer variações informais da pergunta ("pode parcelar?", "tem como dividir?", "parcel", "parcela") e responder com as três opções disponíveis: 1x à vista, 2x ou 3x sem juros. Mantenha o restante das Instructions inalterado.
+        <pre><code class="language-text">Com base nas últimas configurações do agente geradas nesta conversa e na planilha de ajustes que acabei de enviar, analise os resultados dos testes e atualize somente os campos necessários. Organize cada ajuste no campo mais adequado, consulte a documentação Salesforce.
 
-[Instruções atuais da Force Recovery]</code></pre>
+Ajustes gerais devem ser tratados em System > Agent-Level Instructions.
+Ajustes específicos do subagente devem ser tratados em Subagent Description ou Subagent Reasoning Instructions.
+
+Apresente somente os campos modificados, nesta ordem:
+1. Agent Details > Description;
+2. System > Agent-Level Instructions; (Aqui mantenha, no máximo, 900 caracteres)
+3. Welcome Message;
+4. Subagent Description;
+5. Subagent Reasoning Instructions.
+
+Para cada campo, apresente o texto completo revisado e pronto para copiar e colar. Não use quebra de linhas nos parágrafos. Ao final, inclua uma seção descrevendo os ajustes realizados comparados à versão anterior.</code></pre>
       </div>
-      <p>Resultado: após o ajuste e um novo teste, o agente passou a reconhecer corretamente 8 de 10 variações informais da pergunta sobre parcelamento.</p>
 
       <h2>Prática — Sua vez</h2>
       <div class="practice-section">
         <div class="practice-field">
           <label class="field-label" for="campo-ajustes_aplicados">
             Quais ajustes você aplicou e qual foi o resultado? *
-            <span>Para cada ajuste: o problema original, a mudança feita nas Instructions, e se o problema foi resolvido nos testes seguintes.</span>
+            <span>Para cada ajuste: o problema original, em qual campo foi feita a mudança, e se o problema foi resolvido nos testes seguintes.</span>
           </label>
-          <textarea id="campo-ajustes_aplicados" rows="12" placeholder="Ajuste 1:&#10;Problema: agente não reconhecia variações informais de parcelamento&#10;Mudança: adicionei exemplos de variações nas Instructions&#10;Resultado: agente passou a reconhecer corretamente&#10;&#10;Ajuste 2:&#10;...">${r.ajustes_aplicados || ''}</textarea>
+          <textarea id="campo-ajustes_aplicados" rows="12" placeholder="Ajuste 1:&#10;Problema: agente não reconhecia variações informais de parcelamento&#10;Campo modificado: Subagent Reasoning Instructions&#10;Resultado: agente passou a reconhecer corretamente&#10;&#10;Ajuste 2:&#10;...">${r.ajustes_aplicados || ''}</textarea>
         </div>
       </div>
 
       <h2>Recap</h2>
       <div class="recap-box">
-        Você completou o primeiro ciclo de ajuste. A qualidade do agente melhora exponencialmente com ciclos repetidos — a próxima etapa formaliza esse processo em um método estruturado chamado Curadoria Conversacional.
+        Você completou o primeiro ciclo de ajuste. A próxima etapa formaliza esse processo em ciclos repetidos de Curadoria Conversacional, com pelo menos quatro ciclos no total incluindo este.
       </div>
 
       <button class="btn-concluir" id="btn-concluir-5" disabled>Concluir Etapa 5 →</button>`;

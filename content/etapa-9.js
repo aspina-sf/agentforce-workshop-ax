@@ -3,7 +3,7 @@ if (typeof ETAPAS === 'undefined') window.ETAPAS = {};
 ETAPAS[9] = {
   titulo: 'Teste funcional final',
   tempo: '20 min',
-  topicos: ['Objetivos', 'Teoria', 'Checklist de validação', 'Prática', 'Recap'],
+  topicos: ['Objetivos', 'Como preparar', 'Checklist de validação', 'Prática', 'Recap'],
   campos: [
     { key: 'checklist_validacao', obrigatorio: false },
     { key: 'observacoes_finais', obrigatorio: true }
@@ -14,12 +14,12 @@ ETAPAS[9] = {
     try { checks = r.checklist_validacao ? JSON.parse(r.checklist_validacao) : {}; } catch (e) { checks = {}; }
 
     const itens = [
-      'O agente se apresenta corretamente e com o tom adequado ao público',
-      'O agente lida com respostas inesperadas sem travar ou retornar erro',
-      'Todos os dados marcados para captura estão sendo coletados corretamente',
-      'O agente encerra a conversa de forma satisfatória e registra o resultado',
-      'O Welcome Message está correto, acolhedor e específico para o contexto',
-      'O Error Message está ativo e direciona o usuário para um canal alternativo'
+      'O roteamento para o subagente correto está funcionando.',
+      'O comportamento conversacional aprovado pela área de negócio está preservado.',
+      'A execução de ações, automações e integrações está correta.',
+      'A gravação dos dados identificados na Etapa 7 está sendo realizada corretamente.',
+      'O tratamento de erros, exceções e mensagens fora de contexto está adequado.',
+      'A experiência real do cliente no canal escolhido está satisfatória.'
     ];
 
     const checklistHtml = itens.map((item, i) => `
@@ -40,21 +40,21 @@ ETAPAS[9] = {
 
       <h2>Objetivos de Aprendizado</h2>
       <ul>
-        <li>Validar o agente contra o checklist de qualidade final</li>
-        <li>Documentar o estado final para entrega ao time técnico</li>
-        <li>Confirmar que o agente está pronto para implementação completa</li>
+        <li>Realizar o teste funcional completo do agente no canal de produção</li>
+        <li>Validar de ponta a ponta os 6 pontos do checklist de qualidade final</li>
+        <li>Obter a aprovação conjunta das áreas de negócio e técnica</li>
       </ul>
 
       <div class="callout-box">
         <span class="callout-box-icon">⚠️</span>
         <div class="callout-box-body">
-          <strong>Só entregue o agente ao time técnico após todos os 6 itens estarem marcados.</strong> Uma entrega prematura gera retrabalho técnico custoso — o time técnico não pode corrigir problemas de negócio.
+          <strong>O agente estará pronto para publicação após a aprovação funcional conjunta das áreas de negócio e técnica.</strong> Realize o teste preferencialmente no canal em que ele será disponibilizado ao cliente.
         </div>
       </div>
 
-      <h2>Teoria</h2>
-      <p>O teste funcional final é a validação formal antes da implementação técnica. Ele garante que o agente atinge os requisitos mínimos de qualidade em todas as dimensões que importam para o usuário final.</p>
-      <p>Diferente dos testes anteriores, este é um teste de aceitação: você não está procurando melhorias, está confirmando que o agente está pronto. Se encontrar algo que precise corrigir, volte à Etapa 6 para um ciclo adicional de Curadoria Conversacional.</p>
+      <h2>Como preparar os cenários de teste</h2>
+      <p>Recomenda-se manter toda a construção do agente na mesma conversa com seu assistente de IA. Como ele terá o histórico da definição, dos ajustes conversacionais, das marcações de dados e dos requisitos técnicos, poderá gerar cenários de teste mais completos e aderentes ao projeto.</p>
+      <p>Antes do teste funcional final, solicite ao assistente de IA uma lista de cenários de teste com base em toda a construção realizada na conversa. Inclua fluxos principais, exceções, roteamento entre subagentes, ações, integrações, gravação de dados e tratamento de erros.</p>
 
       <h2>Checklist de validação final</h2>
       <ul class="checklist">
@@ -65,16 +65,16 @@ ETAPAS[9] = {
       <div class="practice-section">
         <div class="practice-field">
           <label class="field-label" for="campo-observacoes_finais">
-            Observações finais e próximos passos *
-            <span>Registre: estado final do agente, pontos de atenção para o time técnico, e qualquer contexto adicional que ajude na implementação.</span>
+            Observações do teste funcional final e aprovação *
+            <span>Registre: resultado do teste em cada ponto do checklist, pontos de atenção remanescentes e confirmação da aprovação conjunta das áreas de negócio e técnica.</span>
           </label>
-          <textarea id="campo-observacoes_finais" rows="10" placeholder="Estado atual: o agente está pronto para implementação técnica.&#10;&#10;Pontos de atenção para o time técnico:&#10;- O campo Payment_Date_Promise__c é crítico e deve ser testado em produção&#10;- O agente foi validado para PT-BR; outros idiomas precisam de ciclos adicionais&#10;&#10;Próximos passos acordados:&#10;...">${r.observacoes_finais || ''}</textarea>
+          <textarea id="campo-observacoes_finais" rows="10" placeholder="Resultado do teste funcional:&#10;- Roteamento: ✅ correto em todos os cenários testados&#10;- Comportamento conversacional: ✅ aprovado pela área de negócio&#10;- Ações e integrações: ✅ / ⚠️ [descreva se houver pendência]&#10;- Gravação de dados: ✅ campos identificados na Etapa 7 gravando corretamente&#10;- Tratamento de erros: ✅&#10;- Experiência no canal: ✅&#10;&#10;Aprovação:&#10;Área de negócio: [nome / data]&#10;Área técnica: [nome / data]">${r.observacoes_finais || ''}</textarea>
         </div>
       </div>
 
       <h2>Recap</h2>
       <div class="recap-box">
-        Parabéns! Você completou o workshop de construção e curadoria conversacional do Agentforce. Seu agente está documentado, testado e pronto para ser implementado pelo time técnico com total clareza de intenção de negócio.
+        Parabéns! Você completou o guia prático de construção e curadoria conversacional para Agentforce. Seu agente foi definido, refinado, documentado e validado — pronto para publicação com clareza de intenção de negócio e aprovação técnica.
       </div>
 
       <button class="btn-concluir" id="btn-concluir-9" disabled>Concluir Workshop →</button>`;
