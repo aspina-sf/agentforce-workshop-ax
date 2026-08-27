@@ -34,6 +34,10 @@ const Intro = (() => {
             <input type="text" id="intro-empresa" placeholder="Ex: Acme Corp" required>
           </div>
           <div class="practice-field">
+            <label class="field-label" for="intro-senha">Código do treinamento</label>
+            <input type="text" id="intro-senha" placeholder="Digite o código fornecido pelo instrutor">
+          </div>
+          <div class="practice-field">
             <label class="field-label" for="intro-area">Área *</label>
             <select id="intro-area" required>
               <option value="">Selecione...</option>
@@ -49,10 +53,6 @@ const Intro = (() => {
               <span>Descreva brevemente o agente que você tem em mente</span>
             </label>
             <textarea id="intro-caso" rows="4" placeholder="Ex: Agente de cobrança B2B para lembrar clientes sobre faturas em atraso" required></textarea>
-          </div>
-          <div class="practice-field">
-            <label class="field-label" for="intro-senha">Código do treinamento</label>
-            <input type="text" id="intro-senha" placeholder="Digite o código fornecido pelo instrutor">
           </div>
           <button type="submit" class="btn-primary">Começar workshop →</button>
         </form>
