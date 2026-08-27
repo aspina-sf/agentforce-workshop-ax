@@ -14,6 +14,7 @@ const Session = (() => {
         area: '',
         caso_de_uso: '',
         senha: '',
+        caso_exemplo: '',
         email: '',
         optin_relatorio: false,
         data_inicio: new Date().toISOString(),

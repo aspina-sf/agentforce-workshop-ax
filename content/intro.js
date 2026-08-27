@@ -38,6 +38,14 @@ const Intro = (() => {
             <input type="text" id="intro-senha" placeholder="Digite o código fornecido pelo instrutor">
           </div>
           <div class="practice-field">
+            <label class="field-label" for="intro-caso-exemplo">Selecionar Caso de Uso Exemplo</label>
+            <select id="intro-caso-exemplo">
+              <option value="">Selecione...</option>
+              <option value="cobranca">Agente de cobrança B2B — Force Recovery</option>
+              <option value="marketing">Agente de criação de campanhas — Martechforce</option>
+            </select>
+          </div>
+          <div class="practice-field">
             <label class="field-label" for="intro-area">Área *</label>
             <select id="intro-area" required>
               <option value="">Selecione...</option>
@@ -66,11 +74,12 @@ const Intro = (() => {
     const area = document.getElementById('intro-area').value;
     const caso = document.getElementById('intro-caso').value.trim();
     const senha = document.getElementById('intro-senha').value;
+    const casoExemplo = document.getElementById('intro-caso-exemplo').value;
     if (!nome || !empresa || !area || !caso) {
       alert('Por favor, preencha todos os campos.');
       return;
     }
-    Session.setMeta({ participante: nome, empresa, area, caso_de_uso: caso, senha });
+    Session.setMeta({ participante: nome, empresa, area, caso_de_uso: caso, senha, caso_exemplo: casoExemplo });
     Journey.goToEtapa0();
   }
 
