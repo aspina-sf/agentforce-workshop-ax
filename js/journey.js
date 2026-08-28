@@ -113,6 +113,7 @@ const Journey = (() => {
     }
 
     _currentStep = n;
+    renderProgressBar();
     const etapa = ETAPAS[n];
     const etapaData = Session.getEtapa(n);
     document.getElementById('step-content').innerHTML = _wrapWithBackButton(_injectTempo(etapa.tempo, etapa.renderContent(etapaData)));
