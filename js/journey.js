@@ -21,6 +21,7 @@ const Journey = (() => {
       el.style.display = '';
     }
 
+    _currentStep = 0;
     const etapa = ETAPAS[0];
     document.getElementById('step-content').innerHTML = _wrapWithEtapa0BackButton(_injectTempo(etapa.tempo, etapa.renderContent()));
     _renderSidebar(0, etapa);
@@ -68,6 +69,15 @@ const Journey = (() => {
     const atual = data.progresso.etapa_atual || 1;
     const bar = document.getElementById('progress-bar');
     bar.innerHTML = '';
+
+    const dot0 = document.createElement('div');
+    dot0.className = 'progress-dot completed';
+    dot0.textContent = '0';
+    dot0.title = 'Etapa 0';
+    dot0.style.cursor = 'pointer';
+    dot0.addEventListener('click', () => goToEtapa0());
+    if (_currentStep === 0) dot0.classList.add('selected');
+    bar.appendChild(dot0);
 
     for (let i = 1; i <= TOTAL; i++) {
       const dot = document.createElement('div');
