@@ -68,10 +68,8 @@ const Session = (() => {
     save(data);
   }
 
-  function concluirEtapa0(email, optin) {
+  function concluirEtapa0() {
     const data = getOrInit();
-    data.meta.email = email;
-    data.meta.optin_relatorio = optin;
     data.progresso.etapa0_concluida = true;
     if (!data.etapas[0]) data.etapas[0] = { concluida: false, timestamp_conclusao: null, respostas: {} };
     data.etapas[0].concluida = true;

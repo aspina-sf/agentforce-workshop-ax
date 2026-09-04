@@ -8,7 +8,7 @@ ETAPAS[0] = {
     return `
         <h1>Etapa 0 — Antes de Começarmos</h1>
 
-        <p>Antes de entrar no workshop, você precisa ter um ambiente Salesforce funcional com o Agentforce habilitado. Siga os passos abaixo — leva cerca de 15 a 30 minutos.</p>
+        <p>Antes de entrar no workshop, você precisa ter um ambiente Salesforce funcional com o Agentforce habilitado:</p>
 
         <h2 id="etapa0-passo1">1. Crie sua conta no Trailhead</h2>
         <p>O Trailhead é a plataforma de aprendizado gratuita da Salesforce. Você vai usá-la para criar um Playground — um org Salesforce gratuito para treinar.</p>
@@ -32,23 +32,53 @@ ETAPAS[0] = {
 
         <h3>Inscrever-se em uma organização Developer Edition com Agentforce Studio</h3>
         <p>Para concluir este projeto, você precisa de um Playground personalizado que contenha o Agentforce Studio e nossos dados de amostra.</p>
-        <ol class="numbered-steps">
-          <li>Clique em <strong>Create Playground (Criar Playground)</strong> e clique em <strong>Yes, Create Playground (Sim, Criar Playground)</strong>.</li>
-          <li>Sua nova organização é automaticamente associada à sua conta do Trailhead.</li>
-          <li>Anote a data de expiração de sua organização e conclua este emblema antes dessa data.</li>
-          <li>Clique em <strong>Launch (Iniciar)</strong> para abrir o Playground.</li>
-        </ol>
+        <ul class="checklist">
+          <li>
+            <input type="checkbox" id="step-pg-1">
+            <span>Clique em <strong>Create Playground (Criar Playground)</strong> e clique em <strong>Yes, Create Playground (Sim, Criar Playground)</strong>.</span>
+          </li>
+          <li>
+            <input type="checkbox" id="step-pg-2">
+            <span>Sua nova organização é automaticamente associada à sua conta do Trailhead.</span>
+          </li>
+          <li>
+            <input type="checkbox" id="step-pg-3">
+            <span>Anote a data de expiração de sua organização e conclua este emblema antes dessa data.</span>
+          </li>
+          <li>
+            <input type="checkbox" id="step-pg-4">
+            <span>Clique em <strong>Launch (Iniciar)</strong> para abrir o Playground.</span>
+          </li>
+        </ul>
 
         <h3>Habilitar o Agentforce e publicar o site do Experience Cloud</h3>
         <p>A primeira etapa da criação de um agente é ativar o recurso exigido da organização.</p>
-        <ol class="numbered-steps">
-          <li>Clique em <strong>⚙ (ícone de configuração)</strong> e em <strong>Setup (Configuração)</strong>. A página Configuração abre em uma nova guia.</li>
-          <li>Em Setup, na caixa <strong>Quick Find (Busca rápida)</strong>, procure e selecione <strong>Salesforce Go</strong>.</li>
-          <li>Na caixa <strong>Search features...</strong>, insira e selecione <strong>Agentforce Studio</strong>.</li>
-          <li>Clique em <strong>Get Started (Começar a usar)</strong>.</li>
-          <li>Clique em <strong>Turn On (Habilitar)</strong>.</li>
-          <li>Clique em <strong>Turn On (Habilitar)</strong> na janela de confirmação.</li>
-        </ol>
+        <ul class="checklist">
+          <li>
+            <input type="checkbox" id="step-af-1">
+            <span>Clique em <strong>⚙ (ícone de configuração)</strong> e em <strong>Setup (Configuração)</strong>. A página Configuração abre em uma nova guia.</span>
+          </li>
+          <li>
+            <input type="checkbox" id="step-af-2">
+            <span>Em Setup, na caixa <strong>Quick Find (Busca rápida)</strong>, procure e selecione <strong>Salesforce Go</strong>.</span>
+          </li>
+          <li>
+            <input type="checkbox" id="step-af-3">
+            <span>Na caixa <strong>Search features...</strong>, insira e selecione <strong>Agentforce Studio</strong>.</span>
+          </li>
+          <li>
+            <input type="checkbox" id="step-af-4">
+            <span>Clique em <strong>Get Started (Começar a usar)</strong>.</span>
+          </li>
+          <li>
+            <input type="checkbox" id="step-af-5">
+            <span>Clique em <strong>Turn On (Habilitar)</strong>.</span>
+          </li>
+          <li>
+            <input type="checkbox" id="step-af-6">
+            <span>Clique em <strong>Turn On (Habilitar)</strong> na janela de confirmação.</span>
+          </li>
+        </ul>
 
         <h2 id="etapa0-passo3">3. Confirme os pré-requisitos</h2>
         <p>Marque cada item abaixo quando estiver concluído. O botão de avanço só será liberado quando todos estiverem marcados.</p>
@@ -68,26 +98,6 @@ ETAPAS[0] = {
           </li>
         </ul>
 
-        <h2 id="etapa0-passo4">4. Seus dados</h2>
-        <p>Preencha seu email para que o facilitador possa acompanhar sua evolução no workshop.</p>
-
-        <div class="practice-section">
-          <div class="practice-field">
-            <label class="field-label" for="etapa0-email">
-              Email *
-              <span>Usado apenas para envio do seu relatório ao facilitador, se você autorizar.</span>
-            </label>
-            <input type="email" id="etapa0-email" placeholder="seu@email.com" oninput="Etapa0.updateButton()">
-          </div>
-
-          <div class="optin-field">
-            <label class="optin-label">
-              <input type="checkbox" id="etapa0-optin" onchange="Etapa0.updateButton()">
-              <span>Autorizo o compartilhamento do conteúdo gerado neste workshop com a equipe Salesforce.</span>
-            </label>
-          </div>
-        </div>
-
         <button class="btn-concluir" id="btn-concluir-0" disabled onclick="Etapa0.concluir()">
           Estou pronto, vamos começar →
         </button>`;
@@ -101,17 +111,12 @@ const Etapa0 = (() => {
     const p0 = document.getElementById('prereq-0');
     const p1 = document.getElementById('prereq-1');
     const p2 = document.getElementById('prereq-2');
-    const email = document.getElementById('etapa0-email');
-    if (!p0 || !p1 || !p2 || !email) return;
-    const allChecked = p0.checked && p1.checked && p2.checked;
-    const emailValid = email.value.trim().includes('@');
-    btn.disabled = !(allChecked && emailValid);
+    if (!p0 || !p1 || !p2) return;
+    btn.disabled = !(p0.checked && p1.checked && p2.checked);
   }
 
   function concluir() {
-    const email = document.getElementById('etapa0-email').value.trim();
-    const optin = document.getElementById('etapa0-optin').checked;
-    Session.concluirEtapa0(email, optin);
+    Session.concluirEtapa0();
     Journey.start();
   }
 

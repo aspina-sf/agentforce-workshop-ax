@@ -55,6 +55,13 @@ const Intro = (() => {
             </select>
           </div>
           <div class="practice-field">
+            <label class="field-label" for="intro-email">
+              Email *
+              <span>Usado para que o facilitador possa acompanhar sua evolução no workshop.</span>
+            </label>
+            <input type="email" id="intro-email" placeholder="seu@email.com" required>
+          </div>
+          <div class="practice-field">
             <label class="field-label" for="intro-caso">
               Caso de uso que você quer construir *
               <span>Descreva brevemente o agente que você tem em mente</span>
@@ -71,14 +78,15 @@ const Intro = (() => {
     const nome = document.getElementById('intro-nome').value.trim();
     const empresa = document.getElementById('intro-empresa').value.trim();
     const area = document.getElementById('intro-area').value;
+    const email = document.getElementById('intro-email').value.trim();
     const caso = document.getElementById('intro-caso').value.trim();
     const senha = document.getElementById('intro-senha').value;
     const casoExemplo = document.getElementById('intro-caso-exemplo').value;
-    if (!nome || !empresa || !area || !caso) {
-      alert('Por favor, preencha todos os campos.');
+    if (!nome || !empresa || !area || !email || !email.includes('@') || !caso) {
+      alert('Por favor, preencha todos os campos obrigatórios.');
       return;
     }
-    Session.setMeta({ participante: nome, empresa, area, caso_de_uso: caso, senha, caso_exemplo: casoExemplo });
+    Session.setMeta({ participante: nome, empresa, area, email, caso_de_uso: caso, senha, caso_exemplo: casoExemplo });
     Journey.goToEtapa0();
   }
 

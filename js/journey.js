@@ -25,7 +25,6 @@ const Journey = (() => {
     const etapa = ETAPAS[0];
     document.getElementById('step-content').innerHTML = _wrapWithEtapa0BackButton(_injectTempo(etapa.tempo, etapa.renderContent()));
     _renderSidebar(0, etapa);
-    _restoreEtapa0State();
     Etapa0.updateButton();
     renderProgressBar();
     _initScrollSpy();
@@ -34,15 +33,6 @@ const Journey = (() => {
 
   function _wrapWithEtapa0BackButton(html) {
     return `<button class="btn-back-etapa0" onclick="Journey.goToIntro()">← Voltar ao cadastro</button>${html}`;
-  }
-
-  function _restoreEtapa0State() {
-    const data = Session.load();
-    if (!data) return;
-    const email = document.getElementById('etapa0-email');
-    const optin = document.getElementById('etapa0-optin');
-    if (email && data.meta.email) email.value = data.meta.email;
-    if (optin && data.meta.optin_relatorio) optin.checked = true;
   }
 
   function start() {
